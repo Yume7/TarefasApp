@@ -37,6 +37,7 @@ namespace TarefasApp.Domain.Services
             return _tarefaRepository.Consultar()
                 .Select(t => new TarefaResponseDTO
                 {
+                    Id = t.Id,
                     Titulo = t.Titulo,
                     Descricao = t.Descricao,
                     Data = t.Data,

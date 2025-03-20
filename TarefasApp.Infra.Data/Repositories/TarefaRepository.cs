@@ -25,12 +25,15 @@ namespace TarefasApp.Infra.Data.Repositories
 
         public List<Tarefa> Consultar()
         {
-            return _context.Set<Tarefa>().AsNoTracking().ToList();
+            return _context.Set<Tarefa>()
+                .AsNoTracking()
+                .ToList();
         }
 
         public Tarefa? ObterPorId(Guid id)
         {
-            return _context.Set<Tarefa>().Find(id);
+            return _context.Set<Tarefa>()
+                .Find(id);
         }
 
         public void Atualizar(Tarefa tarefa)

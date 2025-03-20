@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using TarefasApp.Domain.DTOs.Requests;
 using TarefasApp.Domain.DTOs.Responses;
+using System.Text.Json;
 
 public class TarefaService
 {
@@ -16,8 +17,28 @@ public class TarefaService
 
     public async Task<List<TarefaResponseDTO>> Consultar()
     {
-        return await _httpClient.GetFromJsonAsync<List<TarefaResponseDTO>>("tarefas/consultar");
+        var response = await _httpClient.GetAsync("tarefas/consultar");
+
+        if (response.IsSuccessStatusCode)
+        {
+            var content = await response.Content.ReadAsStringAsync();
+
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            return JsonSerializer.Deserialize<List<TarefaResponseDTO>>(content, options) ?? new List<TarefaResponseDTO>();
+        }
+        else
+        {
+            var errorContent = await response.Content.ReadAsStringAsync();
+            Console.WriteLine($"Erro {response.StatusCode}: {errorContent}");
+            return new List<TarefaResponseDTO>();
+        }
     }
+
+
 
     public async Task<TarefaResponseDTO> ObterPorId(Guid id)
     {

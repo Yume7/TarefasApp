@@ -13,7 +13,7 @@ namespace TarefasApp.Domain.Models
         public string? Descricao { get; set; }
         public StatusTarefa Status { get; set; }
         public DateTime Data { get; set; }
-   
+       
 
 
 
