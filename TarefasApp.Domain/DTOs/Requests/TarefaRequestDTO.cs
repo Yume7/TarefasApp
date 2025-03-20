@@ -21,7 +21,7 @@ namespace TarefasApp.Domain.DTOs.Requests
 
         [Required(ErrorMessage = "Por favor, informe a data da tarefa.")]
         [DataType(DataType.Date)]
-        [Range(typeof(DateTime), "1753-01-01", "9999-12-31", ErrorMessage = "A data deve estar entre 1753 e 9999.")]
+        [Range(typeof(DateTime), "1753-01-01", "9999-12-31", ErrorMessage = "Por favor, informe uma data válida.")]
         public DateTime Data { get; set; }
 
         [Required(ErrorMessage = "Por favor, informe o status da tarefa.")]

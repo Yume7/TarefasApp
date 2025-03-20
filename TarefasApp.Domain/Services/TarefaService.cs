@@ -77,7 +77,9 @@ namespace TarefasApp.Domain.Services
                 throw new ApplicationException("Tarefa não encontrada.");
 
             return new TarefaResponseDTO
-            {
+            { 
+            
+                Id = tarefa.Id,
                 Titulo = tarefa.Titulo,
                 Descricao = tarefa.Descricao,
                 Data = tarefa.Data,

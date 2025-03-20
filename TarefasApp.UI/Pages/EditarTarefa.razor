@@ -1,6 +1,8 @@
 ﻿@page "/editar-tarefa/{id:guid}"
 @using TarefasApp.Domain.DTOs.Responses
 @using TarefasApp.Domain.DTOs.Requests
+@using TarefasApp.Domain.Models
+@using TarefasApp.UI.Models
 
 @inject TarefaService TarefaService
 @inject NavigationManager Navigation
@@ -10,79 +12,101 @@
 @if (tarefa == null)
 {
     <div class="text-center mt-4">
-        <p class="text-muted">Carregando dados...</p>
+        <p class="text-muted">Tarefa não encontrada.</p>
     </div>
 }
 else
 {
     <div class="container d-flex justify-content-center">
         <div class="card p-4 shadow-lg w-50">
-            <div class="form-group mb-3">
-                <label class="fw-bold">Título</label>
-                <input @bind="tarefa.Titulo" class="form-control" placeholder="Digite o título" />
-            </div>
+            <EditForm EditContext="@editContext" OnValidSubmit="AtualizarTarefa">
+                <DataAnnotationsValidator />
+                <div class="form-group mb-3">
+                    <label class="fw-bold">Título</label>
+                    <InputText @bind-Value="tarefa.Titulo" class="form-control" />
+                    <ValidationMessage For="@(() => tarefa.Titulo)" class="text-danger" />
+                </div>
+                <div class="form-group mb-3">
+                    <label class="fw-bold">Descrição</label>
+                    <InputTextArea @bind-Value="tarefa.Descricao" class="form-control" />
+                    <ValidationMessage For="@(() => tarefa.Descricao)" class="text-danger" />
+                </div>
+                <div class="form-group mb-3">
+                    <label class="fw-bold">Data</label>
+                    <InputDate @bind-Value="tarefa.Data" class="form-control" />
+                    <ValidationMessage For="@(() => tarefa.Data)" class="text-danger" />
+                </div>
 
-            <div class="form-group mb-3">
-                <label class="fw-bold">Descrição</label>
-                <textarea @bind="tarefa.Descricao" class="form-control" placeholder="Digite a descrição"></textarea>
-            </div>
+                <div class="form-group mb-4">
+                    <label class="fw-bold">Status</label>
+                    <InputSelect @bind-Value="tarefa.Status" class="form-control">
+                        @foreach (var status in Enum.GetValues(typeof(StatusTarefa)).Cast<StatusTarefa>())
+                        {
+                            <option value="@status">@status.ToString()</option>
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => tarefa.Status)" class="text-danger" />
+                </div>
 
-            <div class="form-group mb-3">
-                <label class="fw-bold">Data</label>
-                <input type="date" @bind="tarefa.Data" class="form-control" />
-            </div>
 
-            <div class="form-group mb-4">
-                <label class="fw-bold">Status</label>
-                <select @bind="tarefa.Status" class="form-control">
-                    <option value="0">Pendente</option>
-                    <option value="1">Concluída</option>
-                </select>
-            </div>
-
-            <div class="d-flex justify-content-between">
-                <button class="btn btn-primary w-50 me-2" @onclick="AtualizarTarefa">
-                    <i class="bi bi-save"></i> Salvar Alterações
-                </button>
-                <button class="btn btn-danger w-50" @onclick="ExcluirTarefa">
-                    <i class="bi bi-trash"></i> Excluir
-                </button>
-            </div>
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary w-50 me-2" disabled="@formInvalido">
+                        <i class="bi bi-save"></i> Salvar Alterações
+                    </button>
+                    <button class="btn btn-danger w-50" @onclick="ExcluirTarefa">
+                        <i class="bi bi-trash"></i> Excluir
+                    </button>
+                </div>
+            </EditForm>
         </div>
     </div>
 }
 
-
 @code {
     [Parameter] public Guid Id { get; set; }
-    private TarefaResponseDTO tarefa = new();
+    private TarefaResponseDTO tarefa;
+    private EditContext editContext;
 
     protected override async Task OnInitializedAsync()
     {
         var tarefaResult = await TarefaService.ObterPorId(Id);
-
-        if (tarefaResult != null)
-        {
-            tarefa = tarefaResult;
-        }
-        else
+        if (tarefaResult == null)
         {
             Navigation.NavigateTo("/tarefas");
+            return;
         }
+
+        tarefa = new TarefaResponseDTO
+            {
+                Id = tarefaResult.Id,
+                Titulo = tarefaResult.Titulo ?? string.Empty,
+                Descricao = tarefaResult.Descricao ?? string.Empty,
+                Data = tarefaResult.Data,
+                Status = tarefaResult.Status
+            };
+
+        editContext = new EditContext(tarefa);
     }
+
+    private bool formInvalido => string.IsNullOrWhiteSpace(tarefa.Titulo)
+        || string.IsNullOrWhiteSpace(tarefa.Descricao)
+        || tarefa.Data < DateTime.Today;
 
     private async Task AtualizarTarefa()
     {
-        var tarefaRequest = new TarefaRequestDTO
-            {
-                Titulo = tarefa.Titulo,
-                Descricao = tarefa.Descricao,
-                Data = tarefa.Data,
-                Status = tarefa.Status
-            };
+        if (editContext.Validate())
+        {
+            var tarefaRequest = new TarefaRequestDTO
+                {
+                    Titulo = tarefa.Titulo,
+                    Descricao = tarefa.Descricao,
+                    Data = tarefa.Data,
+                    Status = tarefa.Status
+                };
 
-        await TarefaService.Atualizar(Id, tarefaRequest);
-        Navigation.NavigateTo("/tarefas");
+            await TarefaService.Atualizar(Id, tarefaRequest);
+            Navigation.NavigateTo("/tarefas");
+        }
     }
 
     private async Task ExcluirTarefa()

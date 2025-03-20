@@ -38,6 +38,25 @@ namespace TarefasApp.API.Controllers
             return Ok(_tarefaService.Consultar());
         }
 
+        [HttpGet("{id}")]
+        public IActionResult ObterPorId(Guid id)
+
+        {
+            try
+            {
+
+                var tarefa = _tarefaService.ObterPorId(id);
+                if (tarefa == null)
+                    return NotFound();
+
+                return Ok(tarefa);
+
+            }
+            catch (ApplicationException ex)
+            {
+                return NotFound(new { erro = ex.Message });
+            }
+        }
 
         [HttpPut("atualizar/{id}")]
         public IActionResult Atualizar(Guid id, [FromBody] TarefaRequestDTO request)

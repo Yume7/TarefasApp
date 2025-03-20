@@ -15,6 +15,6 @@ namespace TarefasApp.UI.Models
         public DateTime Data { get; set; } = DateTime.Today;
 
         [Required(ErrorMessage = "Por favor, informe o status.")]
-        public string Status { get; set; }
+        public int Status { get; set; }
     }
 }
