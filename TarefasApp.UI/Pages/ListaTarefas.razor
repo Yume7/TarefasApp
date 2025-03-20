@@ -3,30 +3,48 @@
 @inject TarefaService TarefaService
 @inject NavigationManager Navigation
 
-<h3>Lista de Tarefas</h3>
+<h3 class="text-center mt-4">Lista de Tarefas</h3>
 
 @if (tarefas == null)
 {
-    <p>Carregando...</p>
+    <div class="text-center mt-4">
+        <p class="text-muted">Carregando tarefas...</p>
+    </div>
 }
 else
 {
-    <div class="row">
-        @foreach (var tarefa in tarefas)
-        {
-            <div class="col-md-4 mb-3">
-                <div class="card p-3">
-                    <h5>@tarefa.Titulo</h5>
-                    <p>@tarefa.Descricao</p>
-                    <p><strong>Data:</strong> @tarefa.Data.ToString("yyyy-MM-dd")</p>
-                    <p><strong>Status:</strong> @(tarefa.Status == 0 ? "Pendente" : "Concluída")</p>
-                    <button class="btn btn-primary" @onclick="() => EditarTarefa(tarefa.Id)">Editar</button>
-                    <button class="btn btn-danger ms-2" @onclick="() => ExcluirTarefa(tarefa.Id)">Excluir</button>
+    <div class="container mt-4">
+        <div class="row">
+            @foreach (var tarefa in tarefas)
+            {
+                <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                    <div class="card shadow-lg border-0 rounded-3">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary">@tarefa.Titulo</h5>
+                            <p class="card-text text-muted">@tarefa.Descricao</p>
+                            <p><strong>Data:</strong> @tarefa.Data.ToString("dd/MM/yyyy")</p>
+                            <p>
+                                <strong>Status:</strong>
+                                <span class="badge @(tarefa.Status == 0 ? "bg-warning text-dark" : "bg-success")">
+                                    @(tarefa.Status == 0 ? "Pendente" : "Concluída")
+                                </span>
+                            </p>
+                            <div class="d-flex justify-content-between mt-3">
+                                <button class="btn btn-outline-primary w-50 me-2" @onclick="() => EditarTarefa(tarefa.Id)">
+                                    <i class="bi bi-pencil"></i> Editar
+                                </button>
+                                <button class="btn btn-outline-danger w-50" @onclick="() => ExcluirTarefa(tarefa.Id)">
+                                    <i class="bi bi-trash"></i> Excluir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
 }
+
 
 @code {
     private List<TarefaResponseDTO> tarefas = new();

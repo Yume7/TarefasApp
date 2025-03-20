@@ -5,42 +5,53 @@
 @inject TarefaService TarefaService
 @inject NavigationManager Navigation
 
-<h3>Editar Tarefa</h3>
+<h3 class="text-center mt-4">Editar Tarefa</h3>
 
 @if (tarefa == null)
 {
-    <p>Carregando...</p>
+    <div class="text-center mt-4">
+        <p class="text-muted">Carregando dados...</p>
+    </div>
 }
 else
 {
-    <div class="card p-4">
-        <div class="form-group mb-2">
-            <label>Título</label>
-            <input @bind="tarefa.Titulo" class="form-control" />
-        </div>
+    <div class="container d-flex justify-content-center">
+        <div class="card p-4 shadow-lg w-50">
+            <div class="form-group mb-3">
+                <label class="fw-bold">Título</label>
+                <input @bind="tarefa.Titulo" class="form-control" placeholder="Digite o título" />
+            </div>
 
-        <div class="form-group mb-2">
-            <label>Descrição</label>
-            <textarea @bind="tarefa.Descricao" class="form-control"></textarea>
-        </div>
+            <div class="form-group mb-3">
+                <label class="fw-bold">Descrição</label>
+                <textarea @bind="tarefa.Descricao" class="form-control" placeholder="Digite a descrição"></textarea>
+            </div>
 
-        <div class="form-group mb-2">
-            <label>Data</label>
-            <input type="date" @bind="tarefa.Data" class="form-control" />
-        </div>
+            <div class="form-group mb-3">
+                <label class="fw-bold">Data</label>
+                <input type="date" @bind="tarefa.Data" class="form-control" />
+            </div>
 
-        <div class="form-group mb-3">
-            <label>Status</label>
-            <select @bind="tarefa.Status" class="form-control">
-                <option value="0">Pendente</option>
-                <option value="1">Concluída</option>
-            </select>
-        </div>
+            <div class="form-group mb-4">
+                <label class="fw-bold">Status</label>
+                <select @bind="tarefa.Status" class="form-control">
+                    <option value="0">Pendente</option>
+                    <option value="1">Concluída</option>
+                </select>
+            </div>
 
-        <button class="btn btn-primary" @onclick="AtualizarTarefa">Salvar Alterações</button>
-        <button class="btn btn-danger ms-2" @onclick="ExcluirTarefa">Excluir</button>
+            <div class="d-flex justify-content-between">
+                <button class="btn btn-primary w-50 me-2" @onclick="AtualizarTarefa">
+                    <i class="bi bi-save"></i> Salvar Alterações
+                </button>
+                <button class="btn btn-danger w-50" @onclick="ExcluirTarefa">
+                    <i class="bi bi-trash"></i> Excluir
+                </button>
+            </div>
+        </div>
     </div>
 }
+
 
 @code {
     [Parameter] public Guid Id { get; set; }
