@@ -1,0 +1,49 @@
+﻿@page "/tarefas"
+@using TarefasApp.Domain.DTOs.Responses
+@inject TarefaService TarefaService
+@inject NavigationManager Navigation
+
+<h3>Lista de Tarefas</h3>
+
+@if (tarefas == null)
+{
+    <p>Carregando...</p>
+}
+else
+{
+    <div class="row">
+        @foreach (var tarefa in tarefas)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card p-3">
+                    <h5>@tarefa.Titulo</h5>
+                    <p>@tarefa.Descricao</p>
+                    <p><strong>Data:</strong> @tarefa.Data.ToString("yyyy-MM-dd")</p>
+                    <p><strong>Status:</strong> @(tarefa.Status == 0 ? "Pendente" : "Concluída")</p>
+                    <button class="btn btn-primary" @onclick="() => EditarTarefa(tarefa.Id)">Editar</button>
+                    <button class="btn btn-danger ms-2" @onclick="() => ExcluirTarefa(tarefa.Id)">Excluir</button>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private List<TarefaResponseDTO> tarefas = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        tarefas = await TarefaService.Consultar();
+    }
+
+    private void EditarTarefa(Guid id)
+    {
+        Navigation.NavigateTo($"/editar-tarefa/{id}");  
+    }
+
+    private async Task ExcluirTarefa(Guid id)
+    {
+        await TarefaService.Deletar(id);  
+        tarefas.RemoveAll(t => t.Id == id);  
+    }
+}

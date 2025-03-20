@@ -1,0 +1,46 @@
+﻿@page "/"
+@page "/adicionar-tarefa"
+@inject TarefaService TarefaService
+@inject NavigationManager Navigation
+
+@using TarefasApp.Domain.DTOs.Requests
+@using TarefasApp.Domain.DTOs.Responses
+
+<h3>Adicionar Tarefa</h3>
+
+<div class="card p-4">
+    <div class="form-group mb-2">
+        <label>Título</label>
+        <input @bind="novaTarefa.Titulo" class="form-control" />
+    </div>
+
+    <div class="form-group mb-2">
+        <label>Descrição</label>
+        <textarea @bind="novaTarefa.Descricao" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group mb-2">
+        <label>Data</label>
+        <input type="date" @bind="novaTarefa.Data" class="form-control" />
+    </div>
+
+    <div class="form-group mb-3">
+        <label>Status</label>
+        <select @bind="novaTarefa.Status" class="form-control">
+            <option value="0">Pendente</option>
+            <option value="1">Concluída</option>
+        </select>
+    </div>
+
+    <button class="btn btn-success" @onclick="CadastrarTarefa">Salvar</button>
+</div>
+
+@code {
+    private TarefaRequestDTO novaTarefa = new();
+
+    private async Task CadastrarTarefa()
+    {
+        await TarefaService.Cadastrar(novaTarefa);
+        Navigation.NavigateTo("/tarefas");
+    }
+}
