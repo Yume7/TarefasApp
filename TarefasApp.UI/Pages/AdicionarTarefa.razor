@@ -3,6 +3,7 @@
 @inject TarefaService TarefaService
 @inject NavigationManager Navigation
 
+@using TarefasApp.UI.Models
 @using TarefasApp.Domain.DTOs.Requests
 @using TarefasApp.Domain.DTOs.Responses
 
@@ -10,42 +11,58 @@
 
 <div class="container d-flex justify-content-center">
     <div class="card p-4 shadow-lg w-50">
+        <EditForm Model="@novaTarefa" OnValidSubmit="CadastrarTarefa">
+            <DataAnnotationsValidator />
+
         <div class="form-group mb-3">
             <label class="fw-bold">Título</label>
-            <input @bind="novaTarefa.Titulo" class="form-control" placeholder="Digite o título" />
+            <InputText @bind-Value="novaTarefa.Titulo" class="form-control" />
+            <ValidationMessage For="@(() => novaTarefa.Titulo)" class="text-danger" />
         </div>
 
         <div class="form-group mb-3">
             <label class="fw-bold">Descrição</label>
-            <textarea @bind="novaTarefa.Descricao" class="form-control" placeholder="Digite a descrição"></textarea>
+            <InputTextArea @bind-Value="novaTarefa.Descricao" class="form-control" />
+            <ValidationMessage For="@(() => novaTarefa.Descricao)" class="text-danger" />
         </div>
 
         <div class="form-group mb-3">
             <label class="fw-bold">Data</label>
-            <input type="date" @bind="novaTarefa.Data" class="form-control" />
+            <InputDate @bind-Value="novaTarefa.Data" class="form-control" />
+            <ValidationMessage For="@(() => novaTarefa.Data)" class="text-danger" />
         </div>
 
         <div class="form-group mb-4">
             <label class="fw-bold">Status</label>
-            <select @bind="novaTarefa.Status" class="form-control">
+            <InputSelect @bind-Value="novaTarefa.Status" class="form-control">
                 <option value="0">Pendente</option>
                 <option value="1">Concluída</option>
-            </select>
+            </InputSelect>
+            <ValidationMessage For="@(() => novaTarefa.Status)" class="text-danger" />
     </div>
 
 
         <button class="btn btn-success btn-lg w-100" @onclick="CadastrarTarefa">
             <i class="bi bi-check-circle"></i> Salvar
         </button>
+        </EditForm>
 </div>
 </div>
 
 @code {
     private TarefaRequestDTO novaTarefa = new();
 
+    private bool formInvalido => string.IsNullOrWhiteSpace(novaTarefa.Titulo) || string.IsNullOrWhiteSpace(novaTarefa.Descricao) || novaTarefa.Data < DateTime.Today;
+    
     private async Task CadastrarTarefa()
     {
-        await TarefaService.Cadastrar(novaTarefa);
-        Navigation.NavigateTo("/tarefas");
+        if (!formInvalido)
+        {
+        
+            await TarefaService.Cadastrar(novaTarefa);
+            Navigation.NavigateTo("/tarefas");
+        
+        }
+        
     }
 }
