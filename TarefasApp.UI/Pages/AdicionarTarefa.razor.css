@@ -1,0 +1,28 @@
+﻿body {
+}
+
+.btn-primary-custom {
+    background-color: #333333 !important;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: block;
+    margin: 0 auto;
+}
+
+    .btn-primary-custom:hover {
+        background-color: #555555;
+    }
+
+    .btn-primary-custom:focus {
+        background-color: #555555;
+        box-shadow: 0 0 0 0.2rem rgba(161, 0, 255, 0.25);
+    }
+
+
+
