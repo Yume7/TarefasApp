@@ -8,7 +8,7 @@ O sistema tem como objetivo o gerenciamento de tarefas, aplicando princípios mo
 ## 🚀 Tecnologias Utilizadas
 
 - ASP.NET Core
-- Blazor Server
+- Blazor Web Assembly
 - Entity Framework Core (Code First)
 - SQL Server
 - Docker
