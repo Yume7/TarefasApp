@@ -1,6 +1,6 @@
 # TarefasApp
 
-**TarefasApp** é uma aplicação web desenvolvida como parte de um desafio técnico para a Accenture. 
+**TarefasApp** é uma aplicação web desenvolvida como parte de um desafio técnico. 
 O sistema tem como objetivo o gerenciamento de tarefas, aplicando princípios modernos de desenvolvimento como DDD (Domain-Driven Design), boas práticas SOLID, e arquitetura limpa.
 
 ---
@@ -97,6 +97,4 @@ TarefasApp/
 
 📄 Licença
 
-Este projeto é apenas para fins de avaliação técnica.
-
-Desenvolvido por Ingridy Sousa (https://github.com/Yume7) para avaliação técnica da **Accenture**.
+Desenvolvido por Ingridy Sousa (https://github.com/Yume7) para avaliação técnica.
