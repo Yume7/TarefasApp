@@ -46,8 +46,29 @@ else
 }
 
 
+<div class="@GetModalClass()" tabindex="-1" role="dialog" style="background-color: rgba(0,0,0,0.5);">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmar exclusão</h5>
+                <button type="button" class="btn-close" aria-label="Fechar" @onclick="CancelarExclusao"></button>
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza que deseja excluir esta tarefa?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" @onclick="CancelarExclusao">Cancelar</button>
+                <button class="btn btn-danger" @onclick="ConfirmarExclusao">Excluir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @code {
-    private List<TarefaResponseDTO> tarefas = new();
+private List<TarefaResponseDTO> tarefas = new();
+    private bool mostrarModal = false;
+    private Guid idParaExcluir;
 
     protected override async Task OnInitializedAsync()
     {
@@ -56,12 +77,29 @@ else
 
     private void EditarTarefa(Guid id)
     {
-        Navigation.NavigateTo($"/editar-tarefa/{id}");  
+        Navigation.NavigateTo($"/editar-tarefa/{id}");
     }
 
-    private async Task ExcluirTarefa(Guid id)
+
+    private void ExcluirTarefa(Guid id)
     {
-        await TarefaService.Deletar(id);  
-        tarefas.RemoveAll(t => t.Id == id);  
+        idParaExcluir = id;
+        mostrarModal = true;
     }
+
+    private void CancelarExclusao()
+    {
+        mostrarModal = false;
+        idParaExcluir = Guid.Empty;
+    }
+
+    private async Task ConfirmarExclusao()
+    {
+        await TarefaService.Deletar(idParaExcluir);
+        tarefas.RemoveAll(t => t.Id == idParaExcluir);
+        mostrarModal = false;
+    }
+
+    private string GetModalClass() => mostrarModal ? "modal fade show d-block" : "modal fade d-none";
+
 }
