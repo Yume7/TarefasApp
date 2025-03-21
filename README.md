@@ -44,10 +44,16 @@ Este projeto utiliza Docker apenas para o banco de dados (SQL Server). Para inic
 2. Clique com o botão direito e selecione **"Git Bash Here"**
 3. Execute o comando:
 
-   ```bash
    docker-compose up -d
 
 Certifique-se de que o contêiner do SQL Server está em execução antes de iniciar a aplicação.
+
+###🔹 Configurar o Visual Studio para rodar múltiplos projetos
+
+No Gerenciador de Soluções, clique com o botão direito na Solução (TarefasApp) e selecione "Definir Projetos de Inicialização".
+Escolha a opção "Vários Projetos de Inicialização".
+Para os projetos TarefasApp.API e TarefasApp.UI (Blazor), defina a Ação como "Iniciar".
+Clique em OK.
 
 🚀 Executando a Aplicação
 Após configurar o banco de dados, inicie a aplicação normalmente pelo Visual Studio ou CLI:
