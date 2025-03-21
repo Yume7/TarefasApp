@@ -1,84 +1,97 @@
-TarefasApp
+# TarefasApp
 
-📌 Sobre o Projeto
+**TarefasApp é uma aplicação web desenvolvida como parte de um desafio técnico para a Accenture. 
+O sistema tem como objetivo o gerenciamento de tarefas, aplicando princípios modernos de desenvolvimento como DDD (Domain-Driven Design), boas práticas SOLID, e arquitetura limpa.
 
-O TarefasApp é uma aplicação web desenvolvida como prova técnica para a vaga de Analista Junior na Accenture. 
-O objetivo é fornecer uma plataforma para gerenciamento de tarefas, permitindo a criação, edição e exclusão de tarefas de forma intuitiva.
+---
 
-🛠 Tecnologias Utilizadas
+## 🚀 Tecnologias Utilizadas
 
-O projeto foi construído com as seguintes tecnologias:
+- ASP.NET Core
+- Blazor Server
+- Entity Framework Core (Code First)
+- SQL Server
+- Docker
+- FluentValidation
+- Arquitetura baseada em DDD
+- Princípios SOLID
 
-Blazor - Framework para desenvolvimento de aplicações web interativas com C# e .NET.
+---
 
-ASP.NET Core - Framework para desenvolvimento web moderno e escalável.
+## 🔧 Pré-requisitos
 
-Entity Framework Core - ORM para acesso ao banco de dados.
+Antes de executar o projeto, certifique-se de ter os seguintes itens instalados em sua máquina:
 
-SQL Server - Banco de dados relacional utilizado na aplicação.
+- [Git Bash](https://gitforwindows.org/) – para executar comandos dentro da pasta do projeto
+- [Docker](https://www.docker.com/get-started) e [Docker Compose](https://docs.docker.com/compose/install/) – para rodar o SQL Server no contêiner
+- [Visual Studio 2022+](https://visualstudio.microsoft.com/) – com a **.NET SDK** instalada
+- [.NET 7.0+ SDK](https://dotnet.microsoft.com/download/dotnet) – necessário para rodar a aplicação
 
-Docker - Utilizado para facilitar a execução do projeto em ambientes isolados.
+---
 
-FluentValidation - Biblioteca para validação de dados.
+## ⚙️ Configuração e Execução
 
+### 🔄 Clonando o repositório
 
-⚙️ Configuração e Execução do projeto
-
-Pré-requisitos
-
-Antes de iniciar, certifique-se de ter os seguintes requisitos instalados:
-
-.NET 8 SDK
-
-Docker e Docker Compose
-
-SQL Server ou utilize a versão em container via Docker
-
-🚀 Executando o Projeto
-
-Clone o repositório:
-Primeiro, faça o download no GitHub do código-fonte do projeto em seu computador.
-
-Acesse o terminal ou prompt de comando e execute:
 git clone https://github.com/Yume7/TarefasApp
-
-Em seguida, entre na pasta do projeto:
 cd TarefasApp
 
-Configure o banco de dados:
-Rodar o seguinte comando para criar e iniciar o contêiner do banco de dados:
+### 🐳 Subindo o Banco de Dados com Docker
 
-docker-compose up -d
+Este projeto utiliza Docker apenas para o banco de dados (SQL Server). Para iniciar o contêiner, siga os passos:
 
-Credenciais para login:
-Usuário: sa
-Senha: Admin@123
+1. Abra a pasta do projeto
+2. Clique com o botão direito e selecione **"Git Bash Here"**
+3. Execute o comando:
 
+   ```bash
+   docker-compose up -d
 
+Certifique-se de que o contêiner do SQL Server está em execução antes de iniciar a aplicação.
 
-Execute as migrações do banco de dados:
-Para garantir que todas as tabelas e estrutura do banco de dados estejam corretamente criadas, rode o comando:
+🚀 Executando a Aplicação
+Após configurar o banco de dados, inicie a aplicação normalmente pelo Visual Studio ou CLI:
 
-dotnet ef database update
+Blazor Server: https://localhost:7121
+API: https://localhost:7175/api/
 
-Este comando aplicará as migrações no banco de dados configurado.
+---
 
-Inicie manualmente a API e a aplicação Blazor executando:
-dotnet run --project src/TarefasApp.Server (Ou basta clicar em iniciar no Visual Studio)
+## 🧪 Banco de Dados
 
-Acesse a aplicação:
-Após iniciar a aplicação, ela estará disponível nos seguintes endereços:
+A conexão com o banco de dados está definida no `DataContext` via Code First:
 
-A API pode ser acessada em: https://localhost:7175
-A aplicação Blazor pode ser acessada em: https://localhost:7121
+User Id = sa
+Password = Admin@123;
 
+---
 
-🗄️ Banco de Dados
+## 📁 Estrutura do Projeto
 
-A aplicação utiliza Entity Framework Core para gerenciar o banco de dados SQL Server. As entidades são validadas utilizando FluentValidation, garantindo que os dados estejam corretos antes de serem persistidos.
+A estrutura segue o padrão DDD com separação clara por camadas:
+
+TarefasApp/
+│
+├── 1 - Presentation/      # Camada responsável pela interface do usuário (Blazor)
+├── 2 - Application/       # Contém os serviços da aplicação (API, Controllers)
+├── 3 - Domain/            # Representa o núcleo do sistema com entidades e regras de negócio
+├── 4 - InfraStructure/    # Camada de persistência e comunicação com o banco de dados
+└── Itens de Solução/      # Contém o arquivo docker-compose.yml
+
+## ✅ Funcionalidades
+
+- Criar, editar, excluir e listar tarefas
+- Validações robustas com FluentValidation
+- Interface dinâmica com Blazor
+- Organização por responsabilidades (DDD)
+- Persistência com EF Core Code First
+
+---
+
+## 
 
 📄 Licença
 
 Este projeto é apenas para fins de avaliação técnica.
 
-Caso tenha dúvidas, sinta-se à vontade para entrar em contato. 🚀
+Desenvolvido por Ingridy Sousa (https://github.com/Yume7) para avaliação técnica da **Accenture**.
