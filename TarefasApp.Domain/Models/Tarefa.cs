@@ -16,6 +16,5 @@ namespace TarefasApp.Domain.Models
        
 
 
-
     }
 }

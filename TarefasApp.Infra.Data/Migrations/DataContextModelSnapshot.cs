@@ -39,10 +39,6 @@ namespace TarefasApp.Infra.Data.Migrations
                         .HasColumnType("nvarchar(300)")
                         .HasColumnName("DESCRICAO");
 
-                    b.Property<TimeSpan>("Hora")
-                        .HasColumnType("time")
-                        .HasColumnName("HORA");
-
                     b.Property<int>("Status")
                         .HasColumnType("int")
                         .HasColumnName("STATUS");
