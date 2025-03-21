@@ -1,6 +1,6 @@
 # TarefasApp
 
-**TarefasApp** é uma aplicação web desenvolvida como parte de um desafio técnico para a Accenture. 
+**TarefasApp** é uma aplicação web desenvolvida como parte de um desafio técnico. 
 O sistema tem como objetivo o gerenciamento de tarefas, aplicando princípios modernos de desenvolvimento como DDD (Domain-Driven Design), boas práticas SOLID, e arquitetura limpa.
 
 ---
@@ -8,7 +8,7 @@ O sistema tem como objetivo o gerenciamento de tarefas, aplicando princípios mo
 ## 🚀 Tecnologias Utilizadas
 
 - ASP.NET Core
-- Blazor Server
+- Blazor Web Assembly
 - Entity Framework Core (Code First)
 - SQL Server
 - Docker
@@ -77,12 +77,11 @@ Password = Admin@123;
 A estrutura segue o padrão DDD com separação clara por camadas:
 
 TarefasApp/
-│
-├── 1 - Presentation/      # Camada responsável pela interface do usuário (Blazor)
-├── 2 - Application/       # Contém os serviços da aplicação (API, Controllers)
-├── 3 - Domain/            # Representa o núcleo do sistema com entidades e regras de negócio
-├── 4 - InfraStructure/    # Camada de persistência e comunicação com o banco de dados
-└── Itens de Solução/      # Contém o arquivo docker-compose.yml
+- Presentation/      # Camada responsável pela interface do usuário (Blazor)
+- - Application/       # Contém os serviços da aplicação (API, Controllers)
+- Domain/            # Representa o núcleo do sistema com entidades e regras de negócio
+- InfraStructure/    # Camada de persistência e comunicação com o banco de dados
+- Itens de Solução/      # Contém o arquivo docker-compose.yml
 
 ## ✅ Funcionalidades
 
@@ -98,6 +97,4 @@ TarefasApp/
 
 📄 Licença
 
-Este projeto é apenas para fins de avaliação técnica.
-
-Desenvolvido por Ingridy Sousa (https://github.com/Yume7) para avaliação técnica da **Accenture**.
+Desenvolvido por Ingridy Sousa (https://github.com/Yume7) para avaliação técnica.
