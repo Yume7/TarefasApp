@@ -77,12 +77,11 @@ Password = Admin@123;
 A estrutura segue o padrão DDD com separação clara por camadas:
 
 TarefasApp/
-│
-├── 1 - Presentation/      # Camada responsável pela interface do usuário (Blazor)
-├── 2 - Application/       # Contém os serviços da aplicação (API, Controllers)
-├── 3 - Domain/            # Representa o núcleo do sistema com entidades e regras de negócio
-├── 4 - InfraStructure/    # Camada de persistência e comunicação com o banco de dados
-└── Itens de Solução/      # Contém o arquivo docker-compose.yml
+1 - Presentation/      # Camada responsável pela interface do usuário (Blazor)
+2 - Application/       # Contém os serviços da aplicação (API, Controllers)
+3 - Domain/            # Representa o núcleo do sistema com entidades e regras de negócio
+4 - InfraStructure/    # Camada de persistência e comunicação com o banco de dados
+Itens de Solução/      # Contém o arquivo docker-compose.yml
 
 ## ✅ Funcionalidades
 
