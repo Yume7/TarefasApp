@@ -13,7 +13,7 @@ namespace TarefasApp.Infra.Data.Contexts
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=localhost,1434;Initial Catalog=master;User ID=sa;Password=Admin@123;Encrypt=False"");
+            optionsBuilder.UseSqlServer("Data Source=localhost,1434;Initial Catalog=master;User ID=sa;Password=Admin@123;Encrypt=False");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
