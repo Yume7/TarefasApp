@@ -2,7 +2,7 @@
 @using TarefasApp.Domain.DTOs.Responses
 @using TarefasApp.Domain.DTOs.Requests
 @using TarefasApp.Domain.Models
-@using TarefasApp.UI.Models
+@* @using TarefasApp.UI.Models *@
 
 @inject TarefaService TarefaService
 @inject NavigationManager Navigation
@@ -53,14 +53,24 @@ else
                     <button type="submit" class="btn btn-primary w-50 me-2" disabled="@formInvalido">
                         <i class="bi bi-save"></i> Salvar Alterações
                     </button>
-                    <button class="btn btn-danger w-50" @onclick="ExcluirTarefa">
+                    <button type="button" class="btn btn-danger w-50" @onclick="ExcluirTarefa">
                         <i class="bi bi-trash"></i> Excluir
                     </button>
+
                 </div>
             </EditForm>
         </div>
     </div>
 }
+
+<ConfirmModal
+    Show="@mostrarModal"
+    Title="Confirmar exclusão"
+    Message="Tem certeza que deseja excluir esta tarefa?"
+    OnConfirm="ConfirmarExclusao"
+    OnCancel="CancelarExclusao" />
+
+
 
 @code {
     [Parameter] public Guid Id { get; set; }
@@ -109,9 +119,23 @@ else
         }
     }
 
-    private async Task ExcluirTarefa()
+    private bool mostrarModal = false;
+
+    private void ExcluirTarefa()
+    {
+        mostrarModal = true;
+    }
+
+    private void CancelarExclusao()
+    {
+        mostrarModal = false;
+    }
+
+    private async Task ConfirmarExclusao()
     {
         await TarefaService.Deletar(Id);
         Navigation.NavigateTo("/tarefas");
     }
+    private string GetModalClass() => mostrarModal ? "modal fade show d-block" : "modal fade d-none";
+
 }
